@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Drawing Area</title>
+<!-- You can add your style here rather than in an external style sheet. -->
+<style>
+	canvas {
+	    border:5px solid #d3d3d3;
+	    background-color: #f1f1f1;
+	    display: block;
+	}
+</style>
+
+</head>
+<body>
+    <!-- DO NOT MODIFY THIS HTML -->
+    <canvas id = "myCanvas" width = "350" height = "500"  ></canvas>
+    <input type = "color" id = "picker"/>
+
+<script>
+    function resize(){
+        var canvas= document.getElementById("myCanvas");
+        canvas.height = window.innerHeight*.80;
+        canvas.width = window.innerWidth*.80;
+    }
+    resize ();
+		draw();
+    var canvas= document.querySelector("#myCanvas")
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = 'blue';
+    var drawing = true;
+
+    function draw(posX, posY){
+        if (drawing == true){
+	        ctx.beginPath();
+	        ctx.arc(posX -5 , posY -5 , 10, 0, 2 * Math.PI);
+	        ctx.fill();
+    		}
+    }
+
+    myCanvas.addEventListener(
+        'mousemove', function (e) {
+            console.log(e.x,e.y);
+            draw(e.x, e.y);
+            }
+        )
+    window.addEventListener(
+        'keydown', function(e){
+            console.log(e);
+            if (event.key == 'b' || event.key == 'B'){
+                ctx.fillStyle='blue';
+            }
+            else if (event.key == 'g' || event.key == 'G'){
+                ctx.fillStyle='green';
+            }
+            else if (event.key == 'y' || event.key == 'Y'){
+                ctx.fillStyle='yellow';
+            }
+            else if (event.key == 'r' || event.key == 'R'){
+                ctx.fillStyle='red';
+            }
+            if (event.key == " ") {
+                console.log(canvas.width,canvas.height);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+            if (event.key == 'ArrowUp'){
+                drawing = false;
+                ctx.globalAlpha = 0;
+            }
+            else if (event.key == 'ArrowDown') {
+                drawing = true;
+                ctx.globalAlpha = 1;
+            }
+        }
+        )
+        colorpick = document.getElementById("picker");
+        window.addEventListener("change",function(e){
+            color = colorpick.value;
+            ctx.fillStyle = color;
+            ctx.strokeStyle =color;
+        })
+</script>
+</body>
+</html>
